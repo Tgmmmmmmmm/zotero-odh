@@ -1,3 +1,27 @@
 /* eslint-disable no-undef */
 pref("__prefsPrefix__.enable", true);
 pref("__prefsPrefix__.input", "This is input");
+pref("__prefsPrefix__.enabled", true);
+pref("__prefsPrefix__.mouseselection", true);
+pref("__prefsPrefix__.hotkey", true);
+pref("__prefsPrefix__.dict", true);
+pref("__prefsPrefix__.monolingual", true);
+pref("__prefsPrefix__.anki-preferred-audio", true);
+pref("__prefsPrefix__.maxcontext", true);
+pref("__prefsPrefix__.maxexmaple", true);
+pref("__prefsPrefix__.services", true);
+pref("__prefsPrefix__.id", true);
+pref("__prefsPrefix__.password", true);
+pref("__prefsPrefix__.tags", true);
+pref("__prefsPrefix__.deckname", true);
+pref("__prefsPrefix__.typename", true);
+pref("__prefsPrefix__.expression", true);
+pref("__prefsPrefix__.reading", true);
+pref("__prefsPrefix__.extrainfo", true);
+pref("__prefsPrefix__.definition", true);
+pref("__prefsPrefix__.definitions", true);
+pref("__prefsPrefix__.sentence", true);
+pref("__prefsPrefix__.url", true);
+pref("__prefsPrefix__.audio", true);
+pref("__prefsPrefix__.sysscripts", true);
+pref("__prefsPrefix__.udfscripts", true);
