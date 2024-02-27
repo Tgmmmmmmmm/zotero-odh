@@ -2,6 +2,9 @@ import { ColumnOptions } from "zotero-plugin-toolkit/dist/helpers/virtualizedTab
 import { DialogHelper } from "zotero-plugin-toolkit/dist/helpers/dialog";
 import hooks from "./hooks";
 import { createZToolkit } from "./utils/ztoolkit";
+import { ZODHFront } from "./modules/fg/frontend";
+import { ODHBack } from "./modules/bg/backend";
+import api from "./api";
 
 class Addon {
   public data: {
@@ -18,20 +21,24 @@ class Addon {
       rows: Array<{ [dataKey: string]: string }>;
     };
     dialog?: DialogHelper;
+    bg: ODHBack | null;
+    fg: ZODHFront | null;
   };
   // Lifecycle hooks
   public hooks: typeof hooks;
-  // APIs
-  public api: object;
+  // // APIs
+  // public api: typeof api;
 
   constructor() {
     this.data = {
       alive: true,
       env: __env__,
       ztoolkit: createZToolkit(),
+      bg: null,
+      fg: null,
     };
     this.hooks = hooks;
-    this.api = {};
+    // this.api = api;
   }
 }
 

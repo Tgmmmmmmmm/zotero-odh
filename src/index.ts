@@ -1,6 +1,7 @@
 import { BasicTool } from "zotero-plugin-toolkit/dist/basic";
 import Addon from "./addon";
 import { config } from "../package.json";
+import api from "./api";
 
 const basicTool = new BasicTool();
 
@@ -14,6 +15,7 @@ if (!basicTool.getGlobal("Zotero")[config.addonInstance]) {
     return _globalThis.addon.data.ztoolkit;
   });
   Zotero[config.addonInstance] = addon;
+  _globalThis.api = api;
 }
 
 function defineGlobal(name: Parameters<BasicTool["getGlobal"]>[0]): void;

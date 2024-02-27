@@ -5,26 +5,299 @@
   id="zotero-prefpane-__addonRef__"
   onload="Zotero.__addonInstance__.hooks.onPrefsEvent('load', {window})"
 >
+  <groupbox id="zodh-prefpane-general">
+    <label>
+      <html:h2>
+        <span data-i18n="grpGeneral">General Options</span>
+        <span class="option-helps">
+          <html:a
+            href="https://github.com/ninja33/ODH/blob/master/README.md"
+            target="_blank"
+            >?</html:a
+          >
+        </span>
+      </html:h2>
+    </label>
+    <vbox>
+      <hbox class="leftpanel">
+        <label data-i18n="lblEnabled">Enable/Disable</label>
+        <checkbox label="enabled" native="true" />
+        <label data-i18n="lblMouseselection">Enable/Disable</label>
+        <div class="enabled">
+          <input type="checkbox" value="true" id="mouseselection" />
+          <label for="mouseselection"></label>
+        </div>
+      </hbox>
+
+      <hbox class="rightpanel">
+        <label data-i18n="lblHotkey">AuoSel. HotKey</label>
+        <menulist native="true">
+          <menupopup>
+            <menuitem label="Off" />
+            <menuitem label="Shift" />
+          </menupopup>
+        </menulist>
+        <!-- <select id="hotkey">
+                    <option value="0">Off</option>
+                    <option value="16">Shift</option>
+                    <option value="17">Ctrl</option>
+                    <option value="18">Alt</option>
+                </select> -->
+      </hbox>
+    </vbox>
+  </groupbox>
+
   <groupbox>
-    <label><html:h2 data-l10n-id="pref-title"></html:h2></label>
-    <checkbox
-      id="zotero-prefpane-__addonRef__-enable"
-      preference="extensions.zotero.__addonRef__.enable"
-      data-l10n-id="pref-enable"
-    />
+    <label>
+      <html:h2>
+        <span data-i18n="grpDictionary">Dictionary Options</span>
+      </html:h2>
+    </label>
     <hbox>
-      <html:label
-        for="zotero-prefpane-__addonRef__-input"
-        data-l10n-id="pref-input"
-      ></html:label>
+      <label for="dict" data-i18n="lblCurrentDict">Dictionary</label>
+      <menulist native="true">
+        <menupopup>
+          <menuitem label="encn-Default" />
+        </menupopup>
+      </menulist>
+      <!-- <select id="dict" class="col-3x">
+                <option value="encn-Default">encn-Default</option>
+            </select> -->
+    </hbox>
+    <vbox>
+      <hbox>
+        <label data-i18n="lblLingualType">Mono/Bilingual Dict.</label>
+        <menulist native="true">
+          <menupopup>
+            <menuitem label="Bilingual" />
+            <menuitem label="Monolingual" />
+          </menupopup>
+        </menulist>
+      </hbox>
+      <hbox>
+        <label data-i18n="lblAudioPref">Pref. Audio</label>
+        <menulist native="true">
+          <menupopup>
+            <menuitem label="#0" />
+            <menuitem label="#1" />
+          </menupopup>
+        </menulist>
+      </hbox>
+      <hbox>
+        <label data-i18n="lblMaxContext">Max. Context #</label>
+        <menulist native="true">
+          <menupopup>
+            <menuitem label="1" />
+            <menuitem label="2" />
+            <menuitem label="3" />
+          </menupopup>
+        </menulist>
+        <label data-i18n="lblMaxExample">Max. Example #</label>
+        <menulist native="true">
+          <menupopup>
+            <menuitem label="0" />
+            <menuitem label="1" />
+            <menuitem label="2" />
+          </menupopup>
+        </menulist>
+      </hbox>
+    </vbox>
+  </groupbox>
+
+  <groupbox>
+    <label>
+      <html:h2>
+        <span data-i18n="grpAnki">Anki Options</span>
+        <span class="option-helps">
+          <html:a href="https://github.com/FooSoft/anki-connect" target="_blank"
+            >?</html:a
+          >
+        </span>
+      </html:h2>
+    </label>
+
+    <hbox>
+      <label data-i18n="lblServices">Services</label>
+      <menulist>
+        <menupopup>
+          <menuitem value="none">None</menuitem>
+          <menuitem value="ankiconnect">Ankiconnect</menuitem>
+          <menuitem value="ankiweb">Ankiweb</menuitem>
+        </menupopup>
+      </menulist>
+      <label id="services-status">Anki Status</label>
+    </hbox>
+    <div id="user-options">
+      <vbox>
+        <label data-i18n="lblUsername">ID</label>
+        <html:input
+          type="text"
+          id="id"
+          placeholder="Ankiweb Username"
+          class="col-2x"
+        />
+        <label>
+          <html:a
+            href="https://ankiweb.net/account/register"
+            target="_blank"
+            data-i18n="lblSignup"
+            >?</html:a
+          >
+        </label>
+        <label data-i18n="lblPassword">Password</label>
+        <html:input
+          type="password"
+          id="password"
+          placeholder="Ankiweb Password"
+          class="col-2x"
+        />
+        <label class="button" id="login" data-i18n="lblSignin">Signin</label>
+      </vbox>
+    </div>
+    <vbox id="anki-options">
+      <hbox>
+        <label data-i18n="lblDeckname">Deck Name</label>
+        <menulist id="deckname"></menulist>
+      </hbox>
+      <hbox>
+        <label data-i18n="lblTypename">Type Name</label>
+        <menulist id="typename"></menulist>
+      </hbox>
+      <hbox>
+        <vbox>
+          <hbox>
+            <label for="expression" data-i18n="lblExpression">Expression</label>
+            <menulist id="expression"></menulist>
+          </hbox>
+          <hbox>
+            <label for="reading" data-i18n="lblReading">Reading</label>
+            <menulist id="reading"></menulist>
+          </hbox>
+          <hbox>
+            <label for="definition" data-i18n="lblDefinition">Definition</label>
+            <menulist id="definition"></menulist>
+          </hbox>
+          <hbox>
+            <label for="definitions" data-i18n="lblDefinitions"
+              >Definition</label
+            >
+            <menulist id="definitions"></menulist>
+          </hbox>
+        </vbox>
+        <vbox>
+          <hbox>
+            <label for="sentence" data-i18n="lblSentence">Sentence</label>
+            <menulist id="sentence"></menulist>
+          </hbox>
+          <hbox>
+            <label for="extrainfo" data-i19n="lblExtrainfo">Extrainfo</label>
+            <menulist id="extrainfo"></menulist>
+          </hbox>
+
+          <hbox>
+            <label for="url" data-i18n="lblUrl">URL</label>
+            <menulist id="url"></menulist>
+          </hbox>
+
+          <hbox>
+            <label for="audio" data-i18n="lblAudio">Audio</label>
+            <menulist id="audio"></menulist>
+          </hbox>
+        </vbox>
+      </hbox>
+      <hbox>
+        <label data-i18n="lblTags">Tags Name</label>
+        <html:input type="text" id="tags" placeholder="Tags" class="col-3x" />
+      </hbox>
+    </vbox>
+    <vbox id="duplicate-option">
+      <hbox>
+        <label data-i18n="lblAllowDuplicate">Allow Duplicate</label>
+        <menulist id="duplicate" class="col-3x">
+          <menupopup>
+            <menuitem value="0" data-i18n="selNotAllowed">Not Allowed</menuitem>
+            <menuitem value="1" data-i18n="selAllowed">Allowed</menuitem>
+          </menupopup>
+        </menulist>
+      </hbox>
+    </vbox>
+  </groupbox>
+  <groupbox>
+    <label>
+      <html:h2>
+        <span data-i18n="grpUdfScripts">User-Defined Script</span>
+        <span class="option-helps">
+          <a
+            href="https://github.com/ninja33/ODH/blob/master/doc/development.md"
+            target="_blank"
+            >?</a
+          >
+        </span>
+      </html:h2>
+    </label>
+    <hbox>
+      <html:label data-i18n="lblUdfScripts">UDF Scripts Name</html:label>
       <html:input
         type="text"
-        id="zotero-prefpane-__addonRef__-input"
-        preference="extensions.zotero.__addonRef__.input"
-      ></html:input>
+        id="udfscripts"
+        placeholder="http(s)://your_host.com/your_script.js"
+        class="col-3x"
+      />
     </hbox>
-    <hbox class="virtualized-table-container" flex="1" height="300px">
-      <html:div id="__addonRef__-table-container" />
+  </groupbox>
+  <groupbox>
+    <vbox>
+      <label>
+        <html:h2>
+          <span data-i18n="grpSysScripts">System Script</span>
+          <span class="option-helps">
+            <a id="hidden" href="#">…</a>
+          </span>
+        </html:h2>
+      </label>
+      <hbox>
+        <html:label data-i18n="lblSysScripts">SYS Scripts Name</html:label>
+        <html:input
+          type="text"
+          id="sysscripts"
+          placeholder="System Scripts"
+          class="col-3x"
+        />
+      </hbox>
+      <hbox>
+        <div id="scriptslisthead" class="sl-head">
+          <span class="sl-col sl-col-onoff" data-i18n="lstOnoff">OnOff</span>
+          <span class="sl-col sl-col-cloud" data-i18n="lstCloud">Cloud</span>
+          <span class="sl-col sl-col-name" data-i18n="lstName"
+            >Script Name</span
+          >
+          <span class="sl-col sl-col-description" data-i18n="lstDescription"
+            >Script Description</span
+          >
+        </div>
+      </hbox>
+      <hbox class="virtualized-table-container" flex="1" height="300px">
+        <html:div id="__addonRef__-table-container" />
+      </hbox>
+    </vbox>
+  </groupbox>
+  <groupbox>
+    <vbox>
+      <button id="saveload" data-i18n="btnSaveLoad">Save and Load</button>
+      <div class="gifs">
+        <span class="gif" id="gif-load">
+          <img src="/fg/img/load.gif" alt="" />
+        </span>
+        <span class="gif" id="gif-good">
+          <img src="/fg/img/good.png" alt="" />
+        </span>
+        <span class="gif" id="gif-fail">
+          <img src="/fg/img/fail.png" alt="" />
+        </span>
+      </div>
+    </vbox>
+    <hbox>
+      <button id="saveclose" data-i18n="btnSaveClose">Save and Close</button>
     </hbox>
   </groupbox>
 </vbox>

@@ -5,10 +5,15 @@ import {
   PromptExampleFactory,
   UIExampleFactory,
 } from "./modules/examples";
+import { ZodhFactory } from "./modules/zodh";
+import { ZODHFront } from "./modules/fg/frontend";
+import { ODHBack } from "./modules/bg/backend";
 import { config } from "../package.json";
 import { getString, initLocale } from "./utils/locale";
 import { registerPrefsScripts } from "./modules/preferenceScript";
 import { createZToolkit } from "./utils/ztoolkit";
+import { buildReaderPopup, renderPopup } from "./modules/fg/popup";
+import { registerReaderInitializer } from "./modules/reader";
 
 async function onStartup() {
   await Promise.all([
@@ -18,9 +23,20 @@ async function onStartup() {
   ]);
   initLocale();
 
-  BasicExampleFactory.registerPrefs();
+  // BasicExampleFactory.registerPrefs();
+  ZodhFactory.registerPrefs();
 
+  // const obj = new builtin_encn_Collins();
+
+  if (addon.data.bg === null) {
+    addon.data.bg = new ODHBack();
+    addon.data.bg.api_initBackend();
+  }
+
+  ZodhFactory.registerNotifier();
   BasicExampleFactory.registerNotifier();
+
+  registerReaderInitializer();
 
   await onMainWindowLoad(window);
 }
@@ -28,6 +44,7 @@ async function onStartup() {
 async function onMainWindowLoad(win: Window): Promise<void> {
   // Create ztoolkit for every window
   addon.data.ztoolkit = createZToolkit();
+  addon.data.fg = new ZODHFront();
 
   const popupWin = new ztoolkit.ProgressWindow(config.addonName, {
     closeOnClick: true,
@@ -114,6 +131,12 @@ async function onNotify(
     extraData[ids[0]].type == "reader"
   ) {
     BasicExampleFactory.exampleNotifierCallback();
+  } else if (
+    event == "add" &&
+    type == "tab" &&
+    extraData[ids[0]].type == "reader"
+  ) {
+    ZodhFactory.registerKeydownEvent();
   } else {
     return;
   }
@@ -173,6 +196,34 @@ function onDialogEvents(type: string) {
   }
 }
 
+async function onReaderPopupShow(
+  event: _ZoteroTypes.Reader.EventParams<"renderTextSelectionPopup">,
+) {
+  const { reader, doc, params, append } = event;
+  // const selection = addon.data.translate.selectedText;
+  // const task = getLastTranslateTask();
+  // if (task?.raw === selection) {
+  const popup = buildReaderPopup(event);
+
+  const result = await Zotero.ZODH.data.bg.api_getTranslation(
+    params.annotation.text.trim(),
+  );
+
+  const content = await renderPopup(result);
+
+  popup.replaceChildren("Hello, Again!");
+
+  // addon.hooks.onReaderPopupRefresh();
+  // return;
+  // }
+  // addTranslateTask(selection, event.reader.itemID);
+  // buildReaderPopup(event);
+  // addon.hooks.onReaderPopupRefresh();
+  // if (getPref("enableAuto")) {
+  // addon.hooks.onTranslate();
+  // }
+}
+
 // Add your hooks here. For element click, etc.
 // Keep in mind hooks only do dispatch. Don't add code that does real jobs in hooks.
 // Otherwise the code would be hard to read and maintian.
@@ -186,4 +237,5 @@ export default {
   onPrefsEvent,
   onShortcuts,
   onDialogEvents,
+  onReaderPopupShow,
 };
