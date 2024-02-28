@@ -8,16 +8,24 @@ export function registerReaderInitializer() {
     "renderTextSelectionPopup",
     (event) => {
       const { reader, doc, params, append } = event;
-      const container = doc.createElement("div");
-      container.append("Loading…");
-      append(container);
+      const popup = doc.createElement("iframe");
+      popup.id = "odh-popup";
+      popup.addEventListener("mousedown", (e: Event) => e.stopPropagation());
+      popup.addEventListener("scroll", (e: Event) => e.stopPropagation());
+
+      // popup.append("Loading…");
+      append(popup);
+
       Zotero.ZODH.data.bg
         .api_getTranslation(params.annotation.text.trim())
         .then((result: any) => {
-          return renderPopup(result);
+          return Zotero.ZODH.data.fg.renderPopup(result);
+          // return renderPopup(result);
         })
         .then((content: any) => {
-          container.innerHTML = content;
+          popup.style.visibility = "visible";
+          popup.contentWindow!.scrollTo(0, 0);
+          popup.srcdoc = content;
         });
 
       // setTimeout(
