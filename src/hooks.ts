@@ -46,24 +46,9 @@ async function onMainWindowLoad(win: Window): Promise<void> {
   addon.data.ztoolkit = createZToolkit();
   addon.data.fg = new ZODHFront();
 
-  const popupWin = new ztoolkit.ProgressWindow(config.addonName, {
-    closeOnClick: true,
-    closeTime: -1,
-  })
-    .createLine({
-      text: getString("startup-begin"),
-      type: "default",
-      progress: 0,
-    })
-    .show();
-
   KeyExampleFactory.registerShortcuts();
 
   await Zotero.Promise.delay(1000);
-  popupWin.changeLine({
-    progress: 30,
-    text: `[30%] ${getString("startup-begin")}`,
-  });
 
   UIExampleFactory.registerStyleSheet();
 
@@ -90,12 +75,6 @@ async function onMainWindowLoad(win: Window): Promise<void> {
   PromptExampleFactory.registerConditionalCommandExample();
 
   await Zotero.Promise.delay(1000);
-
-  popupWin.changeLine({
-    progress: 100,
-    text: `[100%] ${getString("startup-finish")}`,
-  });
-  popupWin.startCloseTimer(5000);
 
   addon.hooks.onDialogEvents("dialogExample");
 }
