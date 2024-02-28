@@ -72,8 +72,9 @@ export class ZODHFront {
     const activeTab = Zotero.Reader.getByTabID(Zotero_Tabs.selectedID);
 
     this._document =
-      activeTab._iframe?.contentDocument.querySelector("iframe")
-        .contentDocument;
+      activeTab._iframe?.contentDocument.querySelector(
+        "iframe",
+      ).contentDocument;
     this._window =
       activeTab._iframe?.contentDocument.querySelector("iframe").contentWindow;
 
@@ -131,12 +132,6 @@ export class ZODHFront {
   }
 
   onMouseMove(e: MouseEvent) {
-    if (Zotero_Tabs.selectedType === "reader") {
-      ztoolkit.log("mouse@" + e.x + "," + e.y);
-    } else {
-      return;
-    }
-
     this.mousemoved = true;
     this.point = {
       x: e.clientX,
