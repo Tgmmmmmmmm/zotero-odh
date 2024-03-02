@@ -6,3 +6,5 @@ pnpm-lock.yaml
 yarn.lock
 zotero-cmd.json
 .DS_Store
+addon/data/collins.json
+addon/data/wordforms.json
