@@ -183,7 +183,7 @@ export class KeyExampleFactory {
 export class UIExampleFactory {
   @example
   static registerStyleSheet() {
-    const styles = ztoolkit.UI.createElement(document, "link", {
+    let styles = ztoolkit.UI.createElement(document, "link", {
       properties: {
         type: "text/css",
         rel: "stylesheet",
@@ -194,6 +194,33 @@ export class UIExampleFactory {
     document
       .getElementById("zotero-item-pane-content")
       ?.classList.add("makeItRed");
+
+    styles = ztoolkit.UI.createElement(document, "link", {
+      properties: {
+        type: "text/css",
+        rel: "stylesheet",
+        href: `chrome://${config.addonRef}/content/frame.css`,
+      },
+    });
+    document.documentElement.appendChild(styles);
+
+    styles = ztoolkit.UI.createElement(document, "link", {
+      properties: {
+        type: "text/css",
+        rel: "stylesheet",
+        href: `chrome://${config.addonRef}/content/client.css`,
+      },
+    });
+    document.documentElement.appendChild(styles);
+
+    styles = ztoolkit.UI.createElement(document, "link", {
+      properties: {
+        type: "text/css",
+        rel: "stylesheet",
+        href: `chrome://${config.addonRef}/content/spell.css`,
+      },
+    });
+    document.documentElement.appendChild(styles);
   }
 
   @example
