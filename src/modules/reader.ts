@@ -8,7 +8,19 @@ export function registerReaderInitializer() {
     "renderTextSelectionPopup",
     (event) => {
       const { reader, doc, params, append } = event;
-      const popup = doc.createElement("iframe");
+      let link = doc.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = "chrome://zodh/content/client.css";
+      doc.head.appendChild(link);
+
+      link = doc.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = "chrome://zodh/content/frame.css";
+      doc.head.appendChild(link);
+
+      const popup = doc.createElement("div");
       popup.id = "odh-popup";
       popup.addEventListener("mousedown", (e: Event) => e.stopPropagation());
       popup.addEventListener("scroll", (e: Event) => e.stopPropagation());
@@ -24,8 +36,10 @@ export function registerReaderInitializer() {
         })
         .then((content: any) => {
           popup.style.visibility = "visible";
-          popup.contentWindow!.scrollTo(0, 0);
-          popup.srcdoc = content;
+          // popup.contentWindow!.scrollTo(0, 0);
+          // popup.srcdoc = content;
+          // popup.src = "chrome://zodh/content/popup.html";
+          popup.innerHTML = content;
         });
 
       // setTimeout(
