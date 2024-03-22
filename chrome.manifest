@@ -1,0 +1,7 @@
+content zoteroodh chrome/content/
+skin zoteroodh default	chrome/skin/default/zoteroodh/
+locale zoteroodh en-US chrome/locale/en-US/
+locale zoteroodh zh-CN chrome/locale/zh-CN/
+
+overlay chrome://zotero/content/zoteroPane.xul chrome://zoteroodh/content/overlay.xul
+overlay chrome://zotero/content/preferences/preferences.xul chrome://zoteroodh/content/preferences.xul

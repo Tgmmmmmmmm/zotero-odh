@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://zoteroodh/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://zoteroodh/locale/overlay.dtd">
+
+<overlay id="zoteroodh" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <script src="chrome://zotero/content/include.js"/>
+    <script src="chrome://zoteroodh/content/scripts/include.js"/>
+</overlay>

@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<!DOCTYPE window SYSTEM "chrome://zoteroodh/locale/overlay.dtd">
+
+<overlay id="zoteroodh-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml">
+
+  <prefwindow id="zotero-prefs">
+    <prefpane id="zotero-prefpane-zoteroodh" insertafter="zotero-prefpane-advanced" label="PDF Translate" image="chrome://zoteroodh/skin/favicon.png" onpaneload="initZPDFTranslatePreferences()">
+      <preferences id="zotero-preferences-zoteroodh">
+        <preference id="pref-zoteroodh-enable" name="extensions.zotero.zoteroodh.enable" type="bool" />
+        <preference id="pref-zoteroodh-enable-popup" name="extensions.zotero.zoteroodh.enablePopup" type="bool" />
+        <preference id="pref-zoteroodh-enable-comment" name="extensions.zotero.zoteroodh.enableComment" type="bool" />
+        <preference id="pref-zoteroodh-enable-note" name="extensions.zotero.zoteroodh.enableNote" type="bool" />
+        <preference id="pref-zoteroodh-enable-auto" name="extensions.zotero.zoteroodh.enableAuto" type="bool" />
+        <preference id="pref-zoteroodh-font-size" name="extensions.zotero.zoteroodh.fontSize" type="string" />
+        <preference id="pref-zoteroodh-raw-result-order" name="extensions.zotero.zoteroodh.rawResultOrder" type="bool" />
+        <preference id="pref-zoteroodh-show-sidebar-engine" name="extensions.zotero.zoteroodh.showSidebarEngine" type="bool" />
+        <preference id="pref-zoteroodh-show-sidebar-language" name="extensions.zotero.zoteroodh.showSidebarLanguage" type="bool" />
+        <preference id="pref-zoteroodh-show-sidebar-source" name="extensions.zotero.zoteroodh.showSidebarRaw" type="bool" />
+        <preference id="pref-zoteroodh-show-sidebar-copy" name="extensions.zotero.zoteroodh.showSidebarCopy" type="bool" />
+        <preference id="pref-zoteroodh-translate-source" name="extensions.zotero.zoteroodh.translateSource" type="string" />
+        <preference id="pref-zoteroodh-translate-sl" name="extensions.zotero.zoteroodh.sourceLanguage" type="string" />
+        <preference id="pref-zoteroodh-translate-tl" name="extensions.zotero.zoteroodh.targetLanguage" type="string" />
+        <preference id="pref-zoteroodh-translate-param" name="extensions.zotero.zoteroodh.secret" type="string" />
+        <preference id="pref-zoteroodh-translate-param-obj" name="extensions.zotero.zoteroodh.secretObj" type="string" />
+        <preference id="pref-zoteroodh-disabled-languages" name="extensions.zotero.zoteroodh.disabledLanguages" type="string" />
+      </preferences>
+      <tabbox>
+        <tabs>
+          <tab label="&zotero.zoteroodh.pref.general.label;" />
+          <tab label="&zotero.zoteroodh.pref.advanced.label;" />
+        </tabs>
+
+        <tabpanels id="zotero-prefpane-zoteroodh" orient="vertical">
+          <tabpanel id="zotero-prefpane-zoteroodh-settings" orient="vertical">
+            <groupbox>
+              <caption label="&zotero.zoteroodh.pref.basic.caption.label;" />
+              <rows>
+                <row>
+                  <checkbox id="zotero-prefpane-zoteroodh-settings-enable" preference="pref-zoteroodh-enable" />
+                  <label value="&zotero.zoteroodh.pref.basic.enable.label;" />
+                </row>
+                <row>
+                  <checkbox id="zotero-prefpane-zoteroodh-settings-enable-auto" preference="pref-zoteroodh-enable-auto" />
+                  <label value="&zotero.zoteroodh.pref.basic.enableAuto.label;" />
+                </row>
+                <row>
+                  <checkbox id="zotero-prefpane-zoteroodh-settings-enable-popup" preference="pref-zoteroodh-enable-popup" />
+                  <label value="&zotero.zoteroodh.pref.basic.enablePopup.label;" />
+                </row>
+                <row>
+                  <checkbox id="zotero-prefpane-zoteroodh-settings-enable-comment" preference="pref-zoteroodh-enable-comment" />
+                  <label value="&zotero.zoteroodh.pref.basic.enableComment.label;" />
+                </row>
+                <row>
+                  <checkbox id="zotero-prefpane-zoteroodh-settings-enable-note" preference="pref-zoteroodh-enable-note" />
+                  <label value="&zotero.zoteroodh.pref.basic.enableNote.label;" />
+                </row>
+              </rows>
+            </groupbox>
+            <groupbox>
+              <caption label="&zotero.zoteroodh.pref.api.caption.label;" />
+              <rows>
+                <row>
+                  <hbox align="center">
+                    <label value="&zotero.zoteroodh.pref.api.translateSource.label;" />
+                  </hbox>
+                  <hbox>
+                    <menulist id="zotero-prefpane-zoteroodh-settings-translate-source" preference="pref-zoteroodh-translate-source" oncommand="updateSourceParam()">
+                      <menupopup>
+                        <menuitem label="&zotero.zoteroodh.pref.api.translateSource.googleapi;" value="googleapi" />
+                        <menuitem label="&zotero.zoteroodh.pref.api.translateSource.google;" value="google" />
+                        <menuitem label="&zotero.zoteroodh.pref.api.translateSource.youdao;" value="youdao" />
+                        <menuitem label="&zotero.zoteroodh.pref.api.translateSource.niutrans;" value="niutrans" />
+                        <menuitem label="&zotero.zoteroodh.pref.api.translateSource.niutranspro;" value="niutranspro" />
+                        <menuitem label="&zotero.zoteroodh.pref.api.translateSource.microsoft;" value="microsoft" />
+                        <menuitem label="&zotero.zoteroodh.pref.api.translateSource.caiyun;" value="caiyun" />
+                        <menuitem label="&zotero.zoteroodh.pref.api.translateSource.deeplfree;" value="deeplfree" />
+                        <menuitem label="&zotero.zoteroodh.pref.api.translateSource.deeplpro;" value="deeplpro" />
+                        <menuitem label="&zotero.zoteroodh.pref.api.translateSource.baidu;" value="baidu" />
+                        <menuitem label="&zotero.zoteroodh.pref.api.translateSource.tencent;" value="tencent" />
+                      </menupopup>
+                    </menulist>
+                  </hbox>
+                </row>
+                <row>
+                  <hbox align="center">
+                    <label value="&zotero.zoteroodh.pref.api.sourceLanguage.label;" />
+                  </hbox>
+                  <hbox>
+                    <menulist id="zotero-prefpane-zoteroodh-settings-translate-sl">
+                      <!-- Insert Here -->
+                    </menulist>
+                  </hbox>
+                  <hbox align="center">
+                    <label value="&zotero.zoteroodh.pref.api.targetLanguage.label;" />
+                  </hbox>
+                  <hbox>
+                    <menulist id="zotero-prefpane-zoteroodh-settings-translate-tl">
+                      <!-- Insert Here -->
+                    </menulist>
+                  </hbox>
+                </row>
+                <row>
+                  <label value="&zotero.zoteroodh.pref.api.secret.label;" />
+                  <textbox id="zotero-prefpane-zoteroodh-settings-translate-param" preference="pref-zoteroodh-translate-param" />
+                </row>
+                <row>
+                  <label value="&zotero.zoteroodh.pref.api.secret.warning.label;" />
+                </row>
+              </rows>
+            </groupbox>
+            <groupbox>
+              <caption label="&zotero.zoteroodh.help.feedback.caption.label;" />
+              <hbox style="display: block">
+                <label value="&zotero.zoteroodh.help.feedback.label;" class="zotero-text-link" href="https://github.com/windingwind/zotero-pdf-translate/issues" />
+              </hbox>
+            </groupbox>
+            <label value="&zotero.zoteroodh.help.version.label;" />
+            <label value="&zotero.zoteroodh.help.releasetime.label;" />
+          </tabpanel>
+          <tabpanel id="zotero-prefpane-zoteroodh-advanced" orient="vertical">
+            <rows>
+              <row>
+                <columns>
+                  <column flex="1">
+                    <groupbox flex="1">
+                      <caption label="&zotero.zoteroodh.pref.advanced.UI.label;" />
+                      <rows>
+                        <row>
+                          <label value="&zotero.zoteroodh.pref.advanced.fontSize.label;" />
+                          <textbox id="zotero-prefpane-zoteroodh-settings-font-size" preference="pref-zoteroodh-font-size" oninput="updatePreviewPannel()" maxwidth="40" />
+                        </row>
+                        <row>
+                          <checkbox id="zotero-prefpane-zoteroodh-settings-show-sidebar-engine" preference="pref-zoteroodh-show-sidebar-engine" />
+                          <label value="&zotero.zoteroodh.pref.advanced.showSidebarEngine.label;" />
+                        </row>
+                        <row>
+                          <checkbox id="zotero-prefpane-zoteroodh-settings-show-sidebar-language" preference="pref-zoteroodh-show-sidebar-language" />
+                          <label value="&zotero.zoteroodh.pref.advanced.showSidebarLanguage.label;" />
+                        </row>
+                        <row>
+                          <checkbox id="zotero-prefpane-zoteroodh-settings-show-sidebar-source" preference="pref-zoteroodh-show-sidebar-source" />
+                          <label value="&zotero.zoteroodh.pref.advanced.showSidebarRaw.label;" />
+                        </row>
+                        <row>
+                          <checkbox id="zotero-prefpane-zoteroodh-settings-show-sidebar-copy" preference="pref-zoteroodh-show-sidebar-copy" />
+                          <label value="&zotero.zoteroodh.pref.advanced.showSidebarCopy.label;" />
+                        </row>
+                        <row>
+                          <checkbox id="zotero-prefpane-zoteroodh-settings-raw-result-order" preference="pref-zoteroodh-raw-result-order" />
+                          <label value="&zotero.zoteroodh.pref.advanced.rawResultOrder.label;" />
+                        </row>
+                      </rows>
+                    </groupbox>
+                  </column>
+                  <column>
+                    <groupbox flex="1">
+                      <caption label="&zotero.zoteroodh.pref.advanced.preview.label;" />
+                      <rows>
+                        <row>
+                          <textbox id="zotero-prefpane-zoteroodh-settings-preview" value="The quick brown fox jumps over a lazy dog" width="200" height="100" multiline="true" />
+                        </row>
+                      </rows>
+                    </groupbox>
+                  </column>
+                </columns>
+              </row>
+              <row>
+                <label value="&zotero.zoteroodh.pref.advanced.disabledLanguages.label;" />
+                <textbox id="zotero-prefpane-zoteroodh-settings-disabled-languages" preference="pref-zoteroodh-disabled-languages" onchange="Zotero.zoteroodh.view.showProgressWindow('PDF Translate', '&zotero.zoteroodh.pref.advanced.disabledLanguages.alert;')" />
+              </row>
+            </rows>
+          </tabpanel>
+        </tabpanels>
+      </tabbox>
+    </prefpane>
+  </prefwindow>
+
+  <!-- Include the main extension logic -->
+  <script src="chrome://zoteroodh/content/scripts/preferences.js" />
+
+</overlay>
