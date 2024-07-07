@@ -1,0 +1,12 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "release",
+      "problemMatcher": [],
+      "label": "npm: release",
+      "detail": "release-it"
+    }
+  ]
+}
