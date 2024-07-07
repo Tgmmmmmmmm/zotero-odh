@@ -195,7 +195,7 @@ export class Addon {
     if (!options.deckname || !options.typename || !options.expression)
       return null;
 
-    const note = {
+    const note: { [key: string]: any } = {
       deckName: options.deckname,
       modelName: options.typename,
       options: { allowDuplicate: options.duplicate == "1" ? true : false },

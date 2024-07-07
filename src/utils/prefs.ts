@@ -1,6 +1,6 @@
 import { config } from "../../package.json";
 
-type Option = {
+export type Option = {
   [key: string]: boolean | string;
   enabled: boolean;
   mouseselection: boolean;

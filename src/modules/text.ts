@@ -18,18 +18,20 @@ function escapeRegExp(string: string) {
 }
 
 String.prototype.replaceAll = function (search, replacement) {
-  const target = this;
+  // const target = this;
   search = escapeRegExp(search);
-  return target.replace(new RegExp(search, "g"), replacement);
+  // return target.replace(new RegExp(search, "g"), replacement);
+  return this.replace(new RegExp(search, "g"), replacement);
 };
 
 String.prototype.searchAll = function (search: string) {
-  const target = this;
+  // const target = this;
   search = escapeRegExp(search);
   const regex = new RegExp(search, "gi");
-  let result = 0;
+  let result = null;
   const indices: number[] = [];
-  while ((result = regex.exec(target)) && result != "") {
+  // while ((result = regex.exec(target)) && result != "") {
+  while ((result = regex.exec(this.valueOf())) && result != null) {
     indices.push(result.index);
   }
   return indices;
@@ -68,6 +70,7 @@ function cutSentence(
     let arr = sentence.match(
       /((?![.!?;:。！？]['"’”]?\s).|\n)*[.!?;:。！？]['"’”]?(\s|.*$)/g,
     );
+    let filtered = null;
     if (arr && arr.length > 1) {
       arr = arr.reduceRight(
         (accumulation, current: string) => {
@@ -80,12 +83,13 @@ function cutSentence(
         },
         [""],
       );
-      arr = arr.filter((x) => x.length);
+      filtered = arr.filter((x) => x.length);
     } else {
-      arr = [sentence];
+      filtered = [sentence];
     }
 
-    let index = arr.findIndex((ele) => {
+    if (filtered === null) return;
+    let index = filtered.findIndex((ele) => {
       //try to exactly match to word based on offset.
       if (ele.indexOf(word) !== -1 && ele.searchAll(word).indexOf(offset) != -1)
         return true;
@@ -94,7 +98,7 @@ function cutSentence(
 
     if (index == -1)
       // fallback if can not exactly find word.
-      index = arr.findIndex((ele) => ele.indexOf(word) !== -1);
+      index = filtered.findIndex((ele) => ele.indexOf(word) !== -1);
 
     const left = Math.ceil((sentenceNum - 1) / 2);
     let start = index - left;
@@ -103,8 +107,8 @@ function cutSentence(
     if (start < 0) {
       start = 0;
       end = sentenceNum - 1;
-    } else if (end > arr.length - 1) {
-      end = arr.length - 1;
+    } else if (end > filtered.length - 1) {
+      end = filtered.length - 1;
 
       if (end - (sentenceNum - 1) < 0) {
         start = 0;
@@ -113,7 +117,7 @@ function cutSentence(
       }
     }
 
-    return arr
+    return filtered
       .slice(start, end + 1)
       .join("")
       .replaceAll(word, word.replace(/[^\s]+/g, "<b>$&</b>"));
@@ -171,9 +175,9 @@ function getPDFNode(_window: Window, node: any) {
     (x) => x.textContent != "" || x.textContent != "-",
   );
   for (const node of sentenceNodes) {
-    if (backwardindex == 0)
-      offset =
-        sentence.length + _window.getSelection().getRangeAt(0).startOffset;
+    const selection = _window.getSelection();
+    if (backwardindex == 0 && selection != null)
+      offset = sentence.length + selection.getRangeAt(0).startOffset;
     backwardindex -= 1;
     const nodetext = node.textContent;
     if (nodetext == "-") sentence = sentence.slice(0, sentence.length - 1);
@@ -197,7 +201,7 @@ export function getSentence(_window: Window, word: string, sentenceNum: any) {
 
   if (selection!.rangeCount < 1) return;
 
-  const node = selection!.getRangeAt(0).commonAncestorContainer;
+  const node = selection!.getRangeAt(0).commonAncestorContainer as HTMLElement;
 
   if (["INPUT", "TEXTAREA"].indexOf(node.tagName) !== -1) {
     return;

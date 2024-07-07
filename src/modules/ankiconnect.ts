@@ -25,10 +25,10 @@ export class Ankiconnect {
         if (Object.getOwnPropertyNames(response).length != 2) {
           throw "response has an unexpected number of fields";
         }
-        if (!response.hasOwnProperty("error")) {
+        if (!Object.prototype.hasOwnProperty.call(response, "error")) {
           throw "response is missing required error field";
         }
-        if (!response.hasOwnProperty("result")) {
+        if (!Object.prototype.hasOwnProperty.call(response, "result")) {
           throw "response is missing required result field";
         }
         if (response.error) {
@@ -54,7 +54,7 @@ export class Ankiconnect {
     return await this.ankiInvoke("modelNames");
   }
 
-  async getModelFieldNames(modelName) {
+  async getModelFieldNames(modelName: string) {
     return await this.ankiInvoke("modelFieldNames", { modelName });
   }
 

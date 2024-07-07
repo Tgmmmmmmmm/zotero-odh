@@ -1,85 +1,86 @@
 /* global api */
 class enfr_Cambridge {
-    constructor(options) {
-        this.options = options;
-        this.maxexample = 2;
-        this.word = '';
+  constructor(options) {
+    this.options = options;
+    this.maxexample = 2;
+    this.word = "";
+  }
+
+  async displayName() {
+    let locale = await api.locale();
+    if (locale.indexOf("CN") != -1) return "剑桥英法词典";
+    if (locale.indexOf("TW") != -1) return "剑桥英法词典";
+    return "Cambridge EN->FR Dictionary";
+  }
+
+  setOptions(options) {
+    this.options = options;
+    this.maxexample = options.maxexample;
+  }
+
+  async findTerm(word) {
+    this.word = word;
+    return await this.findCambridge(word);
+  }
+
+  removeTags(elem, name) {
+    let tags = elem.querySelectorAll(name);
+    tags.forEach((x) => {
+      x.outerHTML = "";
+    });
+  }
+
+  removelinks(elem) {
+    let tags = elem.querySelectorAll("a");
+    tags.forEach((x) => {
+      x.outerHTML = x.innerText;
+    });
+
+    tags = elem.querySelectorAll("h2");
+    tags.forEach((x) => {
+      x.outerHTML = `<div class='head2'>${x.innerHTML}</div>`;
+    });
+
+    tags = elem.querySelectorAll("h3");
+    tags.forEach((x) => {
+      x.outerHTML = `<div class='head3'>${x.innerHTML}</div>`;
+    });
+  }
+
+  async findCambridge(word) {
+    if (!word) return null;
+
+    let base =
+      "https://dictionary.cambridge.org/search/english-french/direct/?q=";
+    let url = base + encodeURIComponent(word);
+    let doc = "";
+    try {
+      let data = await api.fetch(url);
+      let parser = new DOMParser();
+      doc = parser.parseFromString(data, "text/html");
+    } catch (err) {
+      return null;
     }
 
-    async displayName() {
-        let locale = await api.locale();
-        if (locale.indexOf('CN') != -1) return '剑桥英法词典';
-        if (locale.indexOf('TW') != -1) return '剑桥英法词典';
-        return 'Cambridge EN->FR Dictionary';
+    let contents = doc.querySelectorAll(".pr .dictionary") || [];
+    if (contents.length == 0) return null;
+
+    let definition = "";
+    for (const content of contents) {
+      this.removeTags(content, ".extraexamps");
+      this.removeTags(content, ".definition-src");
+      this.removeTags(content, "h2");
+      this.removeTags(content, ".d_br");
+      this.removeTags(content, ".freq.dfreq");
+      this.removelinks(content);
+      definition += content.innerHTML;
     }
+    let css = this.renderCSS();
+    return definition ? css + definition : null;
+  }
 
-    setOptions(options) {
-        this.options = options;
-        this.maxexample = options.maxexample;
-    }
-
-    async findTerm(word) {
-        this.word = word;
-        return await this.findCambridge(word);
-    }
-
-    removeTags(elem, name) {
-        let tags = elem.querySelectorAll(name);
-        tags.forEach(x => {
-            x.outerHTML = '';
-        });
-    }
-
-    removelinks(elem) {
-        let tags = elem.querySelectorAll('a');
-        tags.forEach(x => {
-            x.outerHTML = x.innerText;
-        });
-
-        tags = elem.querySelectorAll('h2');
-        tags.forEach(x => {
-            x.outerHTML = `<div class='head2'>${x.innerHTML}</div>`;
-        });
-
-        tags = elem.querySelectorAll('h3');
-        tags.forEach(x => {
-            x.outerHTML = `<div class='head3'>${x.innerHTML}</div>`;
-        });
-    }
-
-    async findCambridge(word) {
-        if (!word) return null;
-
-        let base = 'https://dictionary.cambridge.org/search/english-french/direct/?q=';
-        let url = base + encodeURIComponent(word);
-        let doc = '';
-        try {
-            let data = await api.fetch(url);
-            let parser = new DOMParser();
-            doc = parser.parseFromString(data, 'text/html');
-        } catch (err) {
-            return null;
-        }
-
-        let contents = doc.querySelectorAll('.pr .dictionary') || [];
-        if (contents.length == 0) return null;
-
-        let definition = '';
-        for (const content of contents) {
-            this.removeTags(content, '.extraexamps');
-            this.removeTags(content, '.definition-src');
-            this.removeTags(content, 'h2');
-            this.removeTags(content, '.d_br');
-            this.removeTags(content, '.freq.dfreq');
-            this.removelinks(content);
-            definition += content.innerHTML;
-        }
-        let css = this.renderCSS();
-        return definition ? css + definition : null;
-    }
-
-    renderCSS() {
-        let css = `
+  renderCSS() {
+    let css = `
             <style>
             .entry-body__el{margin-bottom:10px;}
             .head2{font-size: 1.2em;font-weight:bold;}
@@ -102,6 +103,6 @@ class enfr_Cambridge {
             .trans {color: #5079bb;}
             </style>`;
 
-        return css;
-    }
+    return css;
+  }
 }

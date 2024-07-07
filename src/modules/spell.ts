@@ -1,5 +1,5 @@
 export function spell(doc: Document) {
-  const exec = (command, value = null) =>
+  const exec = (command: any, value: string | undefined = undefined) =>
     doc.execCommand(command, false, value);
   const ensureHTTP = (url: string) =>
     /^https?:\//.test(url) ? url : `https://${url}`;
@@ -21,7 +21,7 @@ export function spell(doc: Document) {
     });
   };
 
-  const buttons = {};
+  const buttons: { [key: string]: any } = {};
   const queryState = (_: any) => {
     for (const cmd in buttons)
       buttons[cmd].classList.toggle(
@@ -47,8 +47,12 @@ export function spell(doc: Document) {
       ["insertImage", "image", ensureHTTP],
     ].map(([cmd, type, t]) => [
       type,
-      (url: string) =>
-        (url = prompt(`Enter the ${type} URL`)) && exec(cmd, t(url)),
+      () => {
+        const url = prompt(`Enter the ${type} URL`);
+        if (url == null) return;
+        // @ts-ignore
+        exec(cmd, t(url));
+      },
     ]),
     [["undo"], ["redo"]],
   ];
@@ -58,7 +62,7 @@ export function spell(doc: Document) {
 
   const spellbar = doc.createElement("div");
   spellbar.className = "spell-bar";
-  actions.map((bar: string[]) => {
+  actions.map((bar: any[]) => {
     const spellzone = doc.createElement("div");
     spellzone.className = "spell-zone";
     bar.map(([cmd, onclick = (_: any) => exec(cmd), control]) => {

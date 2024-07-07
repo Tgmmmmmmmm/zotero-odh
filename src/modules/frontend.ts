@@ -1,14 +1,10 @@
 /* global Popup, rangeFromPoint, TextSourceRange, selectedText, isEmpty, getSentence, isConnected, addNote, getTranslation, playAudio, isValidElement*/
 import { isEmpty, isValidElement, selectedText, getSentence } from "./text";
 import { api_setActionState } from "./frame";
+import { Option } from "../utils/prefs";
 
 export class Translation {
-  options: {
-    hotkey: number;
-    maxcontext: number;
-    services: string;
-    monolingual: string;
-  } | null;
+  options?: Option;
   point: { x: number; y: number } | null;
   notes: any;
   sentence: null;
@@ -21,8 +17,8 @@ export class Translation {
   _window?: Window;
   _document?: Document;
 
-  constructor() {
-    this.options = null;
+  constructor(options: Option) {
+    this.options = options;
     this.point = null;
     this.notes = null;
     this.sentence = null;
@@ -86,11 +82,12 @@ export class Translation {
 
   async renderPopup(notes: any[]) {
     let content = "";
-    // const services = this.options ? this.options.services : "";
-    const services = "ankiconnect";
+    const services = this.options ? this.options.services : "none";
+    // const services = "ankiconnect";
 
     let image = "";
     let imageclass = "";
+    // TODO: make options sanity
     if (services != "none") {
       image = services == "ankiconnect" ? "plus.png" : "cloud.png";
       imageclass = (await isConnected())
@@ -151,6 +148,7 @@ export class Translation {
               </div>
             `;
   }
+
   popupHeader() {
     // const root = chrome.runtime.getURL("/");
     const root = rootURI;

@@ -1,82 +1,82 @@
 /* global api */
 class esen_Spanishdict {
-    constructor(options) {
-        this.options = options;
-        this.maxexample = 2;
-        this.word = '';
+  constructor(options) {
+    this.options = options;
+    this.maxexample = 2;
+    this.word = "";
+  }
+
+  async displayName() {
+    let locale = await api.locale();
+    if (locale.indexOf("CN") != -1) return "spanishdict西英词典";
+    if (locale.indexOf("TW") != -1) return "spanishdict西英词典";
+    return "spanishdict.com ES->EN Dictionary";
+  }
+
+  setOptions(options) {
+    this.options = options;
+    this.maxexample = options.maxexample;
+  }
+
+  async findTerm(word) {
+    this.word = word;
+    return await this.findCambridge(word);
+  }
+
+  removeTags(elem, name) {
+    let tags = elem.querySelectorAll(name);
+    tags.forEach((x) => {
+      x.outerHTML = "";
+    });
+  }
+
+  removelinks(elem) {
+    let tags = elem.querySelectorAll("a");
+    tags.forEach((x) => {
+      x.outerHTML = `<span class='link'>${x.innerText}</span>`;
+    });
+
+    tags = elem.querySelectorAll("h2");
+    tags.forEach((x) => {
+      x.outerHTML = `<div class='head2'>${x.innerHTML}</div>`;
+    });
+
+    tags = elem.querySelectorAll("h3");
+    tags.forEach((x) => {
+      x.outerHTML = `<div class='head3'>${x.innerHTML}</div>`;
+    });
+  }
+
+  async findCambridge(word) {
+    if (!word) return null;
+
+    let base = "https://www.spanishdict.com/translate/";
+    let url = base + encodeURIComponent(word);
+    let doc = "";
+    try {
+      let data = await api.fetch(url);
+      let parser = new DOMParser();
+      doc = parser.parseFromString(data, "text/html");
+    } catch (err) {
+      return null;
     }
 
-    async displayName() {
-        let locale = await api.locale();
-        if (locale.indexOf('CN') != -1) return 'spanishdict西英词典';
-        if (locale.indexOf('TW') != -1) return 'spanishdict西英词典';
-        return 'spanishdict.com ES->EN Dictionary';
+    let contents = doc.querySelectorAll("#dictionary-neodict-es") || [];
+    if (contents.length == 0) return null;
+
+    let definition = "";
+    for (const content of contents) {
+      this.removeTags(content, ".bubble--3j0Ro");
+      this.removeTags(content, ".copyright--2TbNS");
+      this.removelinks(content);
+      definition += content.innerHTML;
     }
+    let css = this.renderCSS();
+    return definition ? css + definition : null;
+  }
 
-    setOptions(options) {
-        this.options = options;
-        this.maxexample = options.maxexample;
-    }
-
-    async findTerm(word) {
-        this.word = word;
-        return await this.findCambridge(word);
-    }
-
-    removeTags(elem, name) {
-        let tags = elem.querySelectorAll(name);
-        tags.forEach(x => {
-            x.outerHTML = '';
-        });
-    }
-
-    removelinks(elem) {
-        let tags = elem.querySelectorAll('a');
-        tags.forEach(x => {
-            x.outerHTML = `<span class='link'>${x.innerText}</span>`;
-        });
-
-        tags = elem.querySelectorAll('h2');
-        tags.forEach(x => {
-            x.outerHTML = `<div class='head2'>${x.innerHTML}</div>`;
-        });
-
-        tags = elem.querySelectorAll('h3');
-        tags.forEach(x => {
-            x.outerHTML = `<div class='head3'>${x.innerHTML}</div>`;
-        });
-    }
-
-    async findCambridge(word) {
-        if (!word) return null;
-
-        let base = 'https://www.spanishdict.com/translate/';
-        let url = base + encodeURIComponent(word);
-        let doc = '';
-        try {
-            let data = await api.fetch(url);
-            let parser = new DOMParser();
-            doc = parser.parseFromString(data, 'text/html');
-        } catch (err) {
-            return null;
-        }
-
-        let contents = doc.querySelectorAll('#dictionary-neodict-es') || [];
-        if (contents.length == 0) return null;
-
-        let definition = '';
-        for (const content of contents) {
-            this.removeTags(content, '.bubble--3j0Ro');
-            this.removeTags(content, '.copyright--2TbNS');
-            this.removelinks(content);
-            definition += content.innerHTML;
-        }
-        let css = this.renderCSS();
-        return definition ? css + definition : null;
-    }
-
-    renderCSS() {
-        let css = `
+  renderCSS() {
+    let css = `
             <style>
             .link { color: #1b85e5; }
             .containerDesktop--2_5JC, .containerMobile--1sbY7 {
@@ -110,6 +110,6 @@ class esen_Spanishdict {
             }
             </style>`;
 
-        return css;
-    }
+    return css;
+  }
 }

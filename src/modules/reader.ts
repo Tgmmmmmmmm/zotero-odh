@@ -1,5 +1,5 @@
 import { config } from "../../package.json";
-import { rangeFromPoint, TextSourceRange } from "./range";
+import { optionsLoad } from "../utils/prefs";
 import { onDomContentLoaded } from "./frame";
 import { Translation } from "./frontend";
 
@@ -25,9 +25,9 @@ export function registerReaderInitializer() {
       addon
         .api_getTranslation(params.annotation.text.trim())
         .then((result: any) => {
-          const translation = new Translation();
-          translation._document = reader._iframeWindow[0]?.document;
-          translation._window = reader._iframeWindow[0];
+          const translation = new Translation(optionsLoad());
+          translation._document = reader._iframeWindow![0]?.document;
+          translation._window = reader._iframeWindow![0];
           addon.data.fg = translation;
           addon.data.fg.notes = result;
           const expression = params.annotation.text.trim();

@@ -1,3 +1,4 @@
+// @ts-nocheck: TODO
 export class Ankiweb {
   profile: null;
   version: string;
@@ -15,7 +16,7 @@ export class Ankiweb {
     // );
   }
 
-  async initConnection(options, forceLogout = false) {
+  async initConnection(options: any, forceLogout = false) {
     const retryCount = 1;
     this.id = options.id;
     this.password = options.password;
@@ -23,7 +24,7 @@ export class Ankiweb {
     return;
   }
 
-  async addNote(note) {
+  async addNote(note: any) {
     return note && this.profile
       ? await this.saveNote(note)
       : Promise.resolve(null);
@@ -37,7 +38,7 @@ export class Ankiweb {
     return this.profile ? this.profile.modelnames : null;
   }
 
-  async getModelFieldNames(modelName) {
+  async getModelFieldNames(modelName: string) {
     return this.profile ? this.profile.modelfieldnames[modelName] : null;
   }
 
@@ -103,7 +104,7 @@ export class Ankiweb {
     });
   }
 
-  async api_save(note, profile) {
+  async api_save(note: any, profile: any) {
     const fields = [];
     for (const field of profile.modelfieldnames[note.modelName]) {
       const fielddata = note.fields[field] ? note.fields[field] : "";

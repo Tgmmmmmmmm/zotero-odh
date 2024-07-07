@@ -26,6 +26,7 @@ function registerAudioLinks(doc: Document) {
       if (e.currentTarget == null) return;
       const ds = (e.currentTarget as HTMLDivElement).dataset;
       const fg = addon.data.fg;
+      if (ds.nindex === undefined || ds.dindex === undefined) return;
       const url = fg?.notes[ds.nindex].audios[ds.dindex];
       for (const key in fg?.audios) {
         addon.data.audios[key].pause();
@@ -44,25 +45,25 @@ function registerAudioLinks(doc: Document) {
   }
 }
 
-function registerSoundLinks() {
-  for (const link of document.getElementsByClassName("odh-playsound")) {
-    link.setAttribute("src", getImageSource("play"));
-    link.addEventListener("click", (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      const ds = e.currentTarget.dataset;
-      window.parent.postMessage(
-        {
-          action: "playSound",
-          params: {
-            sound: ds.sound,
-          },
-        },
-        "*",
-      );
-    });
-  }
-}
+// function registerSoundLinks() {
+//   for (const link of document.getElementsByClassName("odh-playsound")) {
+//     link.setAttribute("src", getImageSource("play"));
+//     link.addEventListener("click", (e) => {
+//       e.stopPropagation();
+//       e.preventDefault();
+//       const ds = e.currentTarget.dataset;
+//       window.parent.postMessage(
+//         {
+//           action: "playSound",
+//           params: {
+//             sound: ds.sound,
+//           },
+//         },
+//         "*",
+//       );
+//     });
+//   }
+// }
 
 function initSpellnTranslation(doc: Document) {
   doc.querySelector("#odh-container")?.appendChild(spell(doc));
@@ -124,11 +125,11 @@ export function api_setActionState(
   }
 }
 
-function onMouseWheel(e) {
-  document.querySelector("html").scrollTop -= e.wheelDeltaY / 3;
-  document.querySelector("body").scrollTop -= e.wheelDeltaY / 3;
-  e.preventDefault();
-}
+// function onMouseWheel(e) {
+//   document.querySelector("html").scrollTop -= e.wheelDeltaY / 3;
+//   document.querySelector("body").scrollTop -= e.wheelDeltaY / 3;
+//   e.preventDefault();
+// }
 
 // document.addEventListener("DOMContentLoaded", onDomContentLoaded, false);
 // window.addEventListener("message", onMessage);

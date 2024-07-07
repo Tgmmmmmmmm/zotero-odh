@@ -1,5 +1,5 @@
 .odh-notes {
-  font-family: 'Open Sans', Helvetica, Arial, 'Microsoft Yahei', Sans-serif;
+  font-family: "Open Sans", Helvetica, Arial, "Microsoft Yahei", Sans-serif;
   /*font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, 'Microsoft Yahei', sans-serif;*/
   font-size: 14px;
   text-align: left;
@@ -10,7 +10,6 @@
   margin: 8px;
   border-radius: 3px;
   box-sizing: border-box;
-  ;
 }
 
 .odh-note {
@@ -53,18 +52,18 @@
   padding: 5px;
   margin-top: 5px;
   word-wrap: break-word;
-  overflow: auto;  
+  overflow: auto;
 }
-#odh-context{
-  font-family: 'Open Sans', Helvetica, Arial, 'Microsoft Yahei', Sans-serif;
-  background:#fffff4;
-  margin:0;
+#odh-context {
+  font-family: "Open Sans", Helvetica, Arial, "Microsoft Yahei", Sans-serif;
+  background: #fffff4;
+  margin: 0;
   width: 96%;
   height: 100px;
 }
 .odh-sentence {
   border: 2px dashed #d0d1d5;
-  padding:0;
+  padding: 0;
 }
 
 .odh-addnote-disabled,
@@ -83,15 +82,15 @@
 
 .odh-addnote-plus {
   background: url("chrome://zodh/content/fg/img/plus.png") no-repeat;
-} 
+}
 
 .odh-addnote-cloud {
   background: url("chrome://zodh/content/fg/img/cloud.png") no-repeat;
-} 
+}
 
 .odh-addnote-load {
   background: url("chrome://zodh/content/fg/img/load.gif") no-repeat;
-} 
+}
 
 .odh-addnote-good {
   background: url("chrome://zodh/content/fg/img/good.png") no-repeat;
@@ -101,9 +100,9 @@
   background: url("chrome://zodh/content/fg/img/fail.png") no-repeat;
 }
 
-.odh-addnote-disabled{
+.odh-addnote-disabled {
   cursor: not-allowed;
-  opacity:0.5;
+  opacity: 0.5;
 }
 
 .odh-audios {

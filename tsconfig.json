@@ -8,6 +8,13 @@
     "strict": true,
     "jsx": "preserve"
   },
-  "include": ["src", "typings", "node_modules/zotero-types", "bg", "addon/fg/js/spell.js", "addon/fg/js/frame.js"],
+  "include": [
+    "src",
+    "typings",
+    "node_modules/zotero-types",
+    "bg",
+    "addon/fg/js/spell.js",
+    "addon/fg/js/frame.js"
+  ],
   "exclude": ["build", "addon"]
 }
