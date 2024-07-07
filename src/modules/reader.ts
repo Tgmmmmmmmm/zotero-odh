@@ -30,8 +30,10 @@ export function registerReaderInitializer() {
           translation._window = reader._iframeWindow[0];
           addon.data.fg = translation;
           addon.data.fg.notes = result;
+          const expression = params.annotation.text.trim();
           const notes = addon.data.fg.buildNote(
             reader._iframeWindow![0],
+            expression,
             result,
           );
           return addon.data.fg.renderPopup(notes);

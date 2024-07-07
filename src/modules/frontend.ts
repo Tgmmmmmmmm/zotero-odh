@@ -49,10 +49,10 @@ export class Translation {
     api_setActionState(this._document, { response, params });
   }
 
-  buildNote(_window: Window, result: ConcatArray<never>) {
+  buildNote(_window: Window, expression: string, result: ConcatArray<never>) {
     //get 1 sentence around the expression.
-    const expression = selectedText(_window!);
-    const sentence = getSentence(_window!, this.maxContext);
+    // const expression = selectedText(_window!);
+    const sentence = getSentence(_window, expression, this.maxContext);
     this.sentence = sentence;
     const tmpl: { [key: string]: any } = {
       css: "",

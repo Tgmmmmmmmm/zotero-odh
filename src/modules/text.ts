@@ -187,13 +187,13 @@ function getPDFNode(_window: Window, node: any) {
   return { sentence, offset };
 }
 
-export function getSentence(_window: Window, sentenceNum: any) {
+export function getSentence(_window: Window, word: string, sentenceNum: any) {
   let sentence = "";
   let offset = 0;
   const upNum = 4;
 
   const selection = _window.getSelection();
-  const word = (selection!.toString() || "").trim();
+  // const word = (selection!.toString() || "").trim();
 
   if (selection!.rangeCount < 1) return;
 
