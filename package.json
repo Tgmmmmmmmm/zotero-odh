@@ -8,8 +8,8 @@
     "addonRef": "zodh",
     "addonInstance": "ZODH",
     "prefsPrefix": "extensions.zotero.zodh",
-    "releasePage": "https://github.com/windingwind/zotero-addon-template/releases",
-    "updateJSON": "https://raw.githubusercontent.com/windingwind/zotero-addon-template/main/update.json"
+    "releasePage": "https://github.com/1ywan/zotero-odh/releases",
+    "updateJSON": "https://raw.githubusercontent.com/1ywan/zotero-odh/main/update.json"
   },
   "main": "src/index.ts",
   "scripts": {
@@ -23,14 +23,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/windingwind/zotero-addon-template.git"
+    "url": "git+https://github.com/1ywan/zotero-odh.git"
   },
-  "author": "windingwind",
-  "license": "AGPL-3.0-or-later",
+  "author": "1ywan",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/windingwind/zotero-addon-template/issues"
+    "url": "https://github.com/1ywan/zotero-odh/issues"
   },
-  "homepage": "https://github.com/windingwind/zotero-addon-template#readme",
+  "homepage": "https://github.com/1ywan/zotero-odh#readme",
   "dependencies": {
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
