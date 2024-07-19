@@ -1,0 +1,17 @@
+{
+  "addons": {
+    "zodh@fatsource.com": {
+      "updates": [
+        {
+          "version": "0.1.0-0",
+          "update_link": "https://github.com/1ywan/zotero-odh/releases/download/v0.1.0-0/zotero-odh.xpi",
+          "applications": {
+            "zotero": {
+              "strict_min_version": "6.999"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
