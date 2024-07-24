@@ -32,11 +32,12 @@ async function populateAnkiDeckAndModel(doc: Document) {
     Zotero.Prefs.get("zodh.typename") as string;
 }
 
-async function populateAnkiFields(doc: Document) {
-  const modelName =
-    (doc.querySelector("#typename") as HTMLSelectElement)!.value ||
-    (Zotero.Prefs.get("zodh.typename") as string);
-  if (modelName === null) return;
+async function populateAnkiFields(doc: Document, modelName: string | null) {
+  if (modelName === null) {
+    modelName =
+      (doc.querySelector("#typename") as HTMLSelectElement)!.value ||
+      (Zotero.Prefs.get("zodh.typename") as string);
+  }
 
   const names = await addon.opt_getModelFieldNames(modelName);
   if (names == null) return;
@@ -87,7 +88,7 @@ async function updateAnkiStatus(doc: Document) {
       "msgFailed";
   } else {
     populateAnkiDeckAndModel(doc);
-    populateAnkiFields(doc);
+    populateAnkiFields(doc, null);
     (doc.querySelector("#services-status") as HTMLLabelElement).innerText =
       "msgSuccess" + [version];
     (doc.querySelector("#anki-options") as HTMLElement)!.style.visibility =
@@ -242,7 +243,8 @@ function onHiddenClicked(doc: Document) {
 }
 
 async function onAnkiTypeChanged(e: any, doc: Document) {
-  populateAnkiFields(doc);
+  const modelName = e.target.value;
+  populateAnkiFields(doc, modelName);
 }
 
 async function onLoginClicked(e: any, doc: Document) {
@@ -354,10 +356,10 @@ export async function onReady(doc: Document) {
     ?.addEventListener("click", () => onHiddenClicked(doc));
   doc
     .querySelector("#typename")
-    ?.addEventListener("change", (e) => onAnkiTypeChanged(e, doc));
+    ?.addEventListener("command", (e) => onAnkiTypeChanged(e, doc));
   doc
     .querySelector("#services")
-    ?.addEventListener("change", (e) => onServicesChanged(e, doc));
+    ?.addEventListener("command", (e) => onServicesChanged(e, doc));
 
   updateAnkiStatus(doc);
 }
