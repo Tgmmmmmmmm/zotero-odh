@@ -14,7 +14,7 @@ export class Translation {
   maxContext: number;
   services: string;
   [key: string]: any;
-  _window?: Window;
+  // _window?: Window;
   _document?: Document;
 
   constructor(options: Option) {

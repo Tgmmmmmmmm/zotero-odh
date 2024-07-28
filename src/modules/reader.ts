@@ -26,8 +26,8 @@ export function registerReaderInitializer() {
         .api_getTranslation(params.annotation.text.trim())
         .then((result: any) => {
           const translation = new Translation(optionsLoad());
-          translation._document = reader._iframeWindow![0]?.document;
-          translation._window = reader._iframeWindow![0];
+          translation._document = reader._iframe!.contentDocument;
+          // translation._window = reader._iframe;
           addon.data.fg = translation;
           addon.data.fg.notes = result;
           const expression = params.annotation.text.trim();
