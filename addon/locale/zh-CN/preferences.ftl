@@ -41,8 +41,7 @@ msgConnecting= 连接中...
 msgFailed= 未连接
 msgSuccess= 
     .message= 已连接:$INFORMATION$,
-    .placeholders= 
-        .information = content: $1 
+    .placeholders= .information = content: $1 
 
 lblTags= 笔记标签
 lblAllowDuplicate= 重复制卡
