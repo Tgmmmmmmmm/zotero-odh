@@ -87,3 +87,31 @@ export function optionsLoad(): Option {
     // dictNameList: getPref("dictNameList") as string[],
   };
 }
+
+export function optionsSave(options: Option) {
+  setPref("enabled", options.enabled);
+  setPref("mouseselection", options.mouseselection);
+  setPref("hotkey", options.hotkey);
+  setPref("maxcontext", options.maxcontext);
+  setPref("maxexample", options.maxexample);
+  setPref("monolingual", options.monolingual);
+  setPref("preferredaudio", options.preferredaudio);
+  setPref("services", options.services);
+  setPref("id", options.id);
+  setPref("password", options.password);
+  setPref("duplicate", options.duplicate);
+  setPref("tags", options.tags);
+  setPref("deckname", options.deckname);
+  setPref("typename", options.typename);
+  setPref("expression", options.expression);
+  setPref("reading", options.reading);
+  setPref("extraiofo", options.extraiofo);
+  setPref("definition", options.definition);
+  setPref("definitions", options.definitions);
+  setPref("sentence", options.sentence);
+  setPref("url", options.url);
+  setPref("audio", options.audio);
+  setPref("sysscripts", options.sysscripts);
+  setPref("udfscripts", options.udfscripts);
+  setPref("dictSelected", options.dictSelected);
+}
