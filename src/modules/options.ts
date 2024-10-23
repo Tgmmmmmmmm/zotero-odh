@@ -1,4 +1,4 @@
-import { optionsLoad } from "../utils/prefs";
+import { Option, optionsLoad } from "../utils/prefs";
 
 /* global odhback, localizeHtmlPage, utilAsync, optionsLoad, optionsSave */
 async function populateAnkiDeckAndModel(doc: Document) {
@@ -69,11 +69,12 @@ async function populateAnkiFields(doc: Document, modelName: string | null) {
   });
 }
 
-async function updateAnkiStatus(doc: Document) {
+async function updateAnkiStatus(doc: Document, options?: Option) {
   (doc.querySelector("#services-status") as HTMLLabelElement).innerHTML =
     "msgConnecting";
   (doc.querySelector("#anki-options") as HTMLElement)!.style.visibility =
     "hidden";
+
   if (Zotero.Prefs.get("zodh.services") == "ankiweb")
     (doc.querySelector("#anki-options") as HTMLElement)!.style.visibility =
       "visible";
@@ -252,12 +253,18 @@ async function onLoginClicked(e: any, doc: Document) {
     "msgConnecting";
   await addon.ankiweb?.initConnection({}, true); // set param forceLogout = true
 
-  // const newOptions = await odhback().opt_optionsChanged(options);
-  updateAnkiStatus(doc);
+  const options = optionsLoad();
+  const newOptions = await addon.opt_optionsChanged(options);
+
+  updateAnkiStatus(doc, newOptions);
 }
 
 async function onServicesChanged(e: any, doc: Document) {
-  updateAnkiStatus(doc);
+  const options = optionsLoad();
+  options.services = e.target.value;
+  const newOptions = await addon.opt_optionsChanged(options);
+
+  updateAnkiStatus(doc, newOptions);
 }
 
 async function onSaveClicked(e: any, doc: Document) {

@@ -18,7 +18,7 @@ async function onStartup() {
 
   // const obj = new builtin_encn_Collins();
 
-  await addon.init();
+  await addon.init(rootURI);
 
   registerReaderInitializer();
 
@@ -52,7 +52,7 @@ async function onMainWindowLoad(win: Window): Promise<void> {
 
   // Create ztoolkit for every window
   addon.data.ztoolkit = createZToolkit();
-  addon.preLoadIcons();
+  // addon.preLoadIcons();
 
   // await readerOpenHook();
   // Zotero.Reader._readers.forEach(async (reader) => {

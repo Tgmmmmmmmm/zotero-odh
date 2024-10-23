@@ -10,6 +10,7 @@ import { Deinflector } from "./modules/deinflector";
 import { Builtin } from "./modules/builtin";
 import { config } from "../package.json";
 import { getString } from "./utils/locale";
+import { Option } from "./utils/prefs";
 
 export class Addon {
   public data: {
@@ -27,6 +28,7 @@ export class Addon {
     audios: { [key: string]: any };
     fg: Translation | null;
   };
+  public rootURI: string;
   // Lifecycle hooks
   public hooks: typeof hooks;
   // // APIs
@@ -37,6 +39,8 @@ export class Addon {
 
   public deinflector: Deinflector | null;
   public builtin: Builtin | null;
+
+  private options: Option | null;
 
   private addedElements: [{ [key: string]: string }?] = [];
 
@@ -62,17 +66,19 @@ export class Addon {
       audios: [],
       fg: null,
     };
-    this.hooks = hooks;
 
+    this.hooks = hooks;
+    this.rootURI = "";
     this.ankiconnect = null;
     this.ankiweb = null;
     this.target = null;
     this.deinflector = null;
     this.builtin = null;
+    this.options = null;
     // this.api = api;
   }
 
-  async init() {
+  async init(rootURI: string) {
     this.ankiconnect = new Ankiconnect();
     this.ankiweb = new Ankiweb();
     this.target = this.ankiconnect;
@@ -82,6 +88,8 @@ export class Addon {
 
     this.builtin = new Builtin();
     this.builtin.loadData();
+
+    this.rootURI = rootURI;
 
     const options = optionsLoad();
     await this.opt_optionsChanged(options);
@@ -103,7 +111,7 @@ export class Addon {
     return this.target ? await this.target.getVersion() : null;
   }
 
-  async opt_optionsChanged(options: { [key: string]: any }) {
+  async opt_optionsChanged(options: Option) {
     // this.setFrontendOptions(options);
 
     switch (options.services) {
@@ -142,7 +150,7 @@ export class Addon {
       loadresults = await this.loadScripts(scriptsset);
     }
 
-    // this.options = options;
+    this.options = options;
     if (loadresults) {
       const namelist = loadresults.map((x: any) => x.result.objectname);
       this.data.dictSelected = namelist.includes(options.dictSelected)
@@ -152,7 +160,7 @@ export class Addon {
     }
     this.setScriptsOptions(options);
     // optionsSave(this.options);
-    // return this.options;
+    return this.options;
   }
 
   setScriptsOptions(options: any) {
@@ -311,23 +319,6 @@ export class Addon {
     } else {
       return null;
     }
-  }
-
-  preLoadIcons() {
-    const plus = document.createElement("img");
-    plus.src = "chrome://zodh/content/fg/img/plus.png";
-
-    const load = document.createElement("img");
-    load.src = "chrome://zodh/content/fg/img/load.gif";
-
-    const good = document.createElement("img");
-    good.src = "chrome://zodh/content/fg/img/good.png";
-
-    const fail = document.createElement("img");
-    fail.src = "chrome://zodh/content/fg/img/fail.png";
-
-    const play = document.createElement("img");
-    play.src = "chrome://zodh/content/fg/img/play.png";
   }
 
   storeAddedElementIDs(tabID: string, id: string) {
