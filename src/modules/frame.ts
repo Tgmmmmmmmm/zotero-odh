@@ -98,7 +98,7 @@ export function onDomContentLoaded(doc: Document) {
   registerAudioLinks(doc);
   // registerSoundLinks();
   // registerHiddenClass();
-  initSpellnTranslation(doc);
+  // initSpellnTranslation(doc);
 }
 
 export function api_setActionState(

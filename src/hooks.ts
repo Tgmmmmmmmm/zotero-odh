@@ -3,7 +3,6 @@ import { initLocale } from "./utils/locale";
 import { createZToolkit } from "./utils/ztoolkit";
 import { registerReaderInitializer } from "./modules/reader";
 import { onReady } from "./modules/options";
-import { injectStyle, onReaderOpened, readerOpenHook } from "./modules/inject";
 import { Addon } from "./addon";
 
 async function onStartup() {
@@ -37,7 +36,6 @@ async function onMainWindowLoad(win: Window): Promise<void> {
     resolve(void 0);
   });
 
-  // injectStyle(win);
   const callback = {
     notify: async (
       event: string,
@@ -84,17 +82,17 @@ async function onNotify(
 ) {
   // You can add your code to the corresponding notify type
   ztoolkit.log("notify", event, type, ids, extraData);
-  if (event == "add" && type == "tab") {
-    let reader = null;
-    try {
-      reader = Zotero.Reader.getByTabID(ids[0] as string);
-    } catch (e) {
-      return;
-    }
-    await onReaderOpened(reader);
-  } else {
-    return;
-  }
+  // if (event == "add" && type == "tab") {
+  //   let reader = null;
+  //   try {
+  //     reader = Zotero.Reader.getByTabID(ids[0] as string);
+  //   } catch (e) {
+  //     return;
+  //   }
+  //   await onReaderOpened(reader);
+  // } else {
+  //   return;
+  // }
 }
 
 /**
