@@ -36,18 +36,6 @@ async function onMainWindowLoad(win: Window): Promise<void> {
     resolve(void 0);
   });
 
-  const callback = {
-    notify: async (
-      event: string,
-      type: string,
-      ids: number[] | string[],
-      extraData: { [key: string]: any },
-    ) => {
-      await onNotify(event, type, ids, extraData);
-    },
-  };
-  Zotero.Notifier.registerObserver(callback, ["tab"]);
-
   // Create ztoolkit for every window
   addon.data.ztoolkit = createZToolkit();
   // addon.preLoadIcons();
@@ -68,31 +56,6 @@ function onShutdown(): void {
   // Remove addon object
   addon.data.alive = false;
   delete Zotero[config.addonInstance];
-}
-
-/**
- * This function is just an example of dispatcher for Notify events.
- * Any operations should be placed in a function to keep this funcion clear.
- */
-async function onNotify(
-  event: string,
-  type: string,
-  ids: Array<string | number>,
-  extraData: { [key: string]: any },
-) {
-  // You can add your code to the corresponding notify type
-  ztoolkit.log("notify", event, type, ids, extraData);
-  // if (event == "add" && type == "tab") {
-  //   let reader = null;
-  //   try {
-  //     reader = Zotero.Reader.getByTabID(ids[0] as string);
-  //   } catch (e) {
-  //     return;
-  //   }
-  //   await onReaderOpened(reader);
-  // } else {
-  //   return;
-  // }
 }
 
 /**
@@ -124,7 +87,6 @@ export default {
   onShutdown,
   onMainWindowLoad,
   onMainWindowUnload,
-  onNotify,
   onPrefsEvent,
   onShortcuts,
   onDialogEvents,
