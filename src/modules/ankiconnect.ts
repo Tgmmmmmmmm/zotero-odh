@@ -7,38 +7,42 @@ export class Ankiconnect {
   async ankiInvoke(action: string, params = {}, timeout = 3000) {
     const version = this.version;
     const request = { action, version, params };
-    const raw_response = await Zotero.HTTP.request(
-      "POST",
-      "http://127.0.0.1:8765",
-      {
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      const raw_response = await Zotero.HTTP.request(
+        "POST",
+        "http://127.0.0.1:8765",
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(request),
+          responseType: "json",
         },
-        body: JSON.stringify(request),
-        responseType: "json",
-      },
-    );
-    const response = raw_response.response;
-    // return response?.response;
-    return new Promise((resolve, reject) => {
-      try {
-        if (Object.getOwnPropertyNames(response).length != 2) {
-          throw "response has an unexpected number of fields";
+      );
+      const response = raw_response.response;
+      // return response?.response;
+      return new Promise((resolve, reject) => {
+        try {
+          if (Object.getOwnPropertyNames(response).length != 2) {
+            throw "response has an unexpected number of fields";
+          }
+          if (!Object.prototype.hasOwnProperty.call(response, "error")) {
+            throw "response is missing required error field";
+          }
+          if (!Object.prototype.hasOwnProperty.call(response, "result")) {
+            throw "response is missing required result field";
+          }
+          if (response.error) {
+            throw response.error;
+          }
+          resolve(response.result);
+        } catch (e) {
+          reject(e);
         }
-        if (!Object.prototype.hasOwnProperty.call(response, "error")) {
-          throw "response is missing required error field";
-        }
-        if (!Object.prototype.hasOwnProperty.call(response, "result")) {
-          throw "response is missing required result field";
-        }
-        if (response.error) {
-          throw response.error;
-        }
-        resolve(response.result);
-      } catch (e) {
-        reject(e);
-      }
-    });
+      });
+    } catch (e: unknown) {
+      return null;
+    }
   }
 
   async addNote(note: any) {
