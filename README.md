@@ -6,6 +6,8 @@ Basically the same features as ODH for Chrome/Firefox, but for Zotero.
 
 ## Quick Start Guide
 
+Same to ODH extension, this plugin connected to Anki also by [AnkiConnect](https://ankiweb.net/shared/info/2055492159).
+
 ## Key Features
 
 These are the ZODH features, put generally in the order in which we plan to implement them.
@@ -13,8 +15,8 @@ These are the ZODH features, put generally in the order in which we plan to impl
 | Status             | Feature                      |
 | ------------------ | ---------------------------- |
 | :white_check_mark: | Anki Connect Service         |
-| :white_check_mark: | Anki Web Service             |
+| :x:                | Anki Web Service             |
 | :white_check_mark: | ODH sysscripts support       |
-| :white_check_mark: | user defined scripts support |
+| :x:                | user defined scripts support |
 
 More information
