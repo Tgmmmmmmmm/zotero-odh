@@ -52,7 +52,8 @@ export class Addon {
       image: `chrome://${config.addonRef}/content/icons/favicon.png`,
       defaultXUL: true,
     };
-    ztoolkit.PreferencePane.register(prefOptions);
+    Zotero.PreferencePanes.register(prefOptions);
+    // ztoolkit.PreferencePane.register(prefOptions);
   }
 
   constructor() {
