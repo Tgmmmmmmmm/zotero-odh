@@ -39,11 +39,7 @@ lblSignin = Signin
 
 msgConnecting = Connecting...
 msgFailed = Not Connected
-msgSuccess = 
-    .message = Connected:$INFORMATION$,
-    .placeholders = information = content: $1
-
-lblAnkiStatus = Anki Status
+msgSuccess = Connected:{$Version}
 
 lblTags = Note Tags
 lblAllowDuplicate = Allow Duplicate

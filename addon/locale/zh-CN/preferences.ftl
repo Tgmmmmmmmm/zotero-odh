@@ -39,9 +39,7 @@ lblSignin= 登录
 
 msgConnecting= 连接中...
 msgFailed= 未连接
-msgSuccess= 
-    .message= 已连接:$INFORMATION$,
-    .placeholders= .information = content: $1 
+msgSuccess= 已连接:{$Version}
 
 lblTags= 笔记标签
 lblAllowDuplicate= 重复制卡

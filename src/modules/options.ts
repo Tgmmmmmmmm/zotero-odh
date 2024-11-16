@@ -70,8 +70,8 @@ async function populateAnkiFields(doc: Document, modelName: string | null) {
 }
 
 async function updateAnkiStatus(doc: Document, options?: Option) {
-  (doc.querySelector("#services-status") as HTMLLabelElement).innerHTML =
-    "msgConnecting";
+  const element = doc.querySelector("#services-status") as HTMLLabelElement;
+  doc.l10n?.setAttributes(element, "zodh-msgConnecting");
   (doc.querySelector("#anki-options") as HTMLElement)!.style.visibility =
     "hidden";
 
@@ -85,13 +85,11 @@ async function updateAnkiStatus(doc: Document, options?: Option) {
 
   const version = await addon.opt_getVersion();
   if (version === null) {
-    (doc.querySelector("#services-status") as HTMLLabelElement).innerHTML =
-      "msgFailed";
+    doc.l10n?.setAttributes(element, "zodh-msgFailed");
   } else {
     populateAnkiDeckAndModel(doc);
     populateAnkiFields(doc, null);
-    (doc.querySelector("#services-status") as HTMLLabelElement).innerHTML =
-      "msgSuccess" + [version];
+    doc.l10n?.setAttributes(element, "zodh-msgSuccess", { Version: version });
     (doc.querySelector("#anki-options") as HTMLElement)!.style.visibility =
       "visible";
     if (Zotero.Prefs.get("zodh.services") == "ankiconnect")
@@ -249,8 +247,8 @@ async function onAnkiTypeChanged(e: any, doc: Document) {
 }
 
 async function onLoginClicked(e: any, doc: Document) {
-  (doc.querySelector("#services-status") as HTMLElement)!.innerHTML =
-    "msgConnecting";
+  // (doc.querySelector("#services-status") as HTMLElement)!.innerHTML =
+  //   "msgConnecting";
   await addon.ankiweb?.initConnection({}, true); // set param forceLogout = true
 
   const options = optionsLoad();
