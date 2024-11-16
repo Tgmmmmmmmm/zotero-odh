@@ -122,8 +122,8 @@
             preference="__prefsPrefix__.monolingual"
           >
             <menupopup id="monolingual">
-              <menuitem label="Bilingual" value="1" />
-              <menuitem label="Monolingual" value="0" />
+              <menuitem class="selBilingual" label="Bilingual" value="1" />
+              <menuitem class="selMonolingual" label="Monolingual" value="0" />
             </menupopup>
           </menulist>
         </hbox>
@@ -135,8 +135,8 @@
             preference="__prefsPrefix__.preferredaudio"
           >
             <menupopup id="anki-preferred-audio">
-              <menuitem label="#0" value="0" />
-              <menuitem label="#1" value="1" />
+              <menuitem class="lblAudioPref0" label="#0" value="0" />
+              <menuitem class="lblAudioPref1" label="#1" value="1" />
             </menupopup>
           </menulist>
         </hbox>
@@ -207,9 +207,7 @@
           <menuitem label="Ankiweb" value="ankiweb" />
         </menupopup>
       </menulist>
-      <label id="services-status" data-l10n-id="msgStatus" class="label"
-        >Anki Status</label
-      >
+      <label id="services-status" class="label">Anki Status</label>
     </hbox>
     <vbox id="user-options" class="hidden">
       <vbox>

@@ -297,8 +297,40 @@ export async function onReady(doc: Document) {
     addon.data.dictSelected;
   (doc.querySelector("#monolingual") as HTMLSelectElement).value =
     Zotero.Prefs.get("zodh.monolingual") as string;
+
+  doc.l10n
+    // @ts-ignore
+    ?.formatValue("zodh-selBilingual")
+    .then(
+      (lbl: string) =>
+        ((doc.querySelector(".selBilingual") as XUL.MenuItem).label = lbl),
+    );
+  doc.l10n
+    // @ts-ignore
+    ?.formatValue("zodh-selMonolingual")
+    .then(
+      (lbl: string) =>
+        ((doc.querySelector(".selMonolingual") as XUL.MenuItem).label = lbl),
+    );
+
   (doc.querySelector("#anki-preferred-audio") as HTMLSelectElement).value =
     Zotero.Prefs.get("zodh.preferredaudio") as string;
+  doc.l10n
+    // @ts-ignore
+    ?.formatValue("zodh-lblAudioPref0")
+    .then(
+      (lbl: string) =>
+        ((doc.querySelector(".lblAudioPref0") as XUL.MenuItem).label = lbl),
+    );
+
+  doc.l10n
+    // @ts-ignore
+    ?.formatValue("zodh-lblAudioPref1")
+    .then(
+      (lbl: string) =>
+        ((doc.querySelector(".lblAudioPref1") as XUL.MenuItem).label = lbl),
+    );
+
   (doc.querySelector("#maxcontext") as HTMLSelectElement).value =
     Zotero.Prefs.get("zodh.maxcontext") as string;
   (doc.querySelector("#maxexample") as HTMLSelectElement).value =
