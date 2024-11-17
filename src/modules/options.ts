@@ -8,7 +8,7 @@ async function populateAnkiDeckAndModel(doc: Document) {
   names = await addon.opt_getDeckNames();
   if (names !== null) {
     names.forEach((name: string) => {
-      const opt = doc.createXULElement("menuitem");
+      const opt = doc.createXULElement("menuitem") as XUL.MenuItem;
       opt.label = name;
       opt.value = name;
       doc.querySelector("#deckname")!.append(opt);
@@ -22,7 +22,7 @@ async function populateAnkiDeckAndModel(doc: Document) {
   names = await addon.opt_getModelNames();
   if (names !== null) {
     names.forEach((name: string) => {
-      const opt = doc.createXULElement("menuitem");
+      const opt = doc.createXULElement("menuitem") as XUL.MenuItem;
       opt.label = name;
       opt.value = name;
       doc.querySelector("#typename")!.append(opt);
@@ -55,12 +55,12 @@ async function populateAnkiFields(doc: Document, modelName: string | null) {
   fields.forEach((field) => {
     const select = doc.querySelector(`#${field}`) as HTMLSelectElement;
     select?.replaceChildren();
-    const opt = doc.createXULElement("menuitem");
+    const opt = doc.createXULElement("menuitem") as XUL.MenuItem;
     opt.label = "";
-    opt.text = "";
+    opt.value = "";
     select?.append(opt);
     names.forEach((name: string) => {
-      const opt1 = doc.createXULElement("menuitem");
+      const opt1 = doc.createXULElement("menuitem") as XUL.MenuItem;
       opt1.label = name;
       opt1.value = name;
       select?.append(opt1);
@@ -112,7 +112,7 @@ function populateDictionary(
   dict?.replaceChildren();
   if (dicts == undefined) return;
   dicts.forEach((item) => {
-    const ele = doc.createXULElement("menuitem");
+    const ele = doc.createXULElement("menuitem") as XUL.MenuItem;
     ele.value = item.objectname;
     ele.label = item.displayname;
     dict!.append(ele);
