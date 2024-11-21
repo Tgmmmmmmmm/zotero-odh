@@ -1,5 +1,5 @@
 .enabled input[type="checkbox"] {
-  visibility: visible;
+  visibility: hidden;
 }
 
 .enabled {

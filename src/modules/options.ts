@@ -281,6 +281,11 @@ async function onSaveClicked(e: any, doc: Document) {
     .dictSelected as string;
 }
 
+async function onEnabledClicked(e: any, doc: Document) {
+  const checkbox = doc.querySelector("#enabled") as HTMLInputElement;
+  checkbox.checked = !checkbox.checked;
+}
+
 export async function onReady(doc: Document) {
   // localizeHtmlPage();
   // const options = await optionsLoad();
@@ -373,6 +378,10 @@ export async function onReady(doc: Document) {
     Zotero.Prefs.get("zodh.udfscripts") as string;
   populateSysScriptsList(doc, Zotero.Prefs.get("zodh.sysscripts") as string);
   onHiddenClicked(doc);
+
+  doc
+    .querySelector(".enabled")
+    ?.addEventListener("click", (e) => onEnabledClicked(e, doc));
 
   doc
     .querySelector("#login")
