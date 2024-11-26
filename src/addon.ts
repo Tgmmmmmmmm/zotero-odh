@@ -49,7 +49,7 @@ export class Addon {
       pluginID: config.addonID,
       src: rootURI + "chrome/content/preferences.xhtml",
       label: getString("prefs-title"),
-      image: `chrome://${config.addonRef}/content/icons/favicon.png`,
+      image: `chrome://${config.addonRef}/content/icons/icon-32.png`,
       defaultXUL: true,
     };
     Zotero.PreferencePanes.register(prefOptions);
