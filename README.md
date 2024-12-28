@@ -8,6 +8,13 @@ Basically the same features as ODH for Chrome/Firefox, but for Zotero.
 
 Same to ODH extension, this plugin connected to Anki also by [AnkiConnect](https://ankiweb.net/shared/info/2055492159).
 
+![example](https://github.com/user-attachments/assets/3b4f267a-1bde-469b-8c34-fd354d703e7a)
+
+## Installation
+
+Download the latest release version `.xpi` binary file, the drag into the Zotero plugins installation panel.
+You also can build from source.
+
 ## Key Features
 
 These are the ZODH features, put generally in the order in which we plan to implement them.
@@ -20,3 +27,5 @@ These are the ZODH features, put generally in the order in which we plan to impl
 | :x:                | user defined scripts support |
 
 More information
+
+## Build from source
